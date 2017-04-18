@@ -57,3 +57,4 @@ jobs:
             docker build -t archivers/content:latest -t archivers/content:$TAG .
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push archivers/content:$TAG
+            docker push archivers/content:latest
