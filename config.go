@@ -6,6 +6,7 @@ import (
 	"github.com/archivers-space/archive"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -127,6 +128,10 @@ func initConfig(mode string) (cfg *config, err error) {
 	return
 }
 
+func packagePath(path string) string {
+	return filepath.Join(os.Getenv("GOPATH"), "src/github.com/archivers-space/content", path)
+}
+
 // readEnvString reads key from the environment, returns def if empty
 func readEnvString(key, def string) string {
 	if env := os.Getenv(key); env != "" {
@@ -167,9 +172,9 @@ func requireConfigStrings(values map[string]string) error {
 func loadConfigFile(mode string, cfg *config) (err error) {
 	var data []byte
 
-	fileName := fmt.Sprintf("config.%s.json", mode)
+	fileName := packagePath(fmt.Sprintf("config.%s.json", mode))
 	if !fileExists(fileName) {
-		fileName = "config.json"
+		fileName = packagePath("config.json")
 		if !fileExists(fileName) {
 			return nil
 		}
