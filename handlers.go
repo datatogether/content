@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/archivers-space/archive"
+	"github.com/datatogether/archive"
 	"io"
 	"net/http"
 	"strconv"
@@ -30,7 +30,7 @@ func DownloadUrlHandler(w http.ResponseWriter, r *http.Request) {
 
 func DownloadUrl(w http.ResponseWriter, r *http.Request) {
 	u := &archive.Url{Id: r.URL.Path[len("/urls/"):]}
-	if err := u.Read(appDB); err != nil {
+	if err := u.Read(store); err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		io.WriteString(w, err.Error())
 		return

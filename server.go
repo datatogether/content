@@ -3,7 +3,9 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"log"
+	"github.com/datatogether/archive"
+	"github.com/datatogether/sql_datastore"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 	"time"
@@ -18,12 +20,22 @@ var (
 	// Use this value to avoid bombing alerts
 	lastAlertSent *time.Time
 
-	// log output
-	logger = log.New(os.Stderr, "", log.Ldate|log.Ltime|log.Lshortfile)
+	// log output via logrus package
+	log = logrus.New()
 
 	// application database connection
 	appDB *sql.DB
+	// elevate default store
+	store = sql_datastore.DefaultStore
 )
+
+func init() {
+	log.Out = os.Stdout
+	log.Level = logrus.InfoLevel
+	log.Formatter = &logrus.TextFormatter{
+		ForceColors: true,
+	}
+}
 
 func main() {
 	var err error
@@ -33,17 +45,16 @@ func main() {
 		panic(fmt.Errorf("server configuration error: %s", err.Error()))
 	}
 
-	connectToAppDb()
+	go connectToAppDb()
+	sql_datastore.SetDB(appDB)
+	sql_datastore.Register(
+		&archive.Url{},
+	)
 
 	s := &http.Server{}
-	m := http.NewServeMux()
-	m.HandleFunc("/.well-known/acme-challenge/", CertbotHandler)
-	m.Handle("/", middleware(HealthCheckHandler))
-
-	m.Handle("/urls/", middleware(DownloadUrlHandler))
 
 	// connect mux to server
-	s.Handler = m
+	s.Handler = NewServerRoutes()
 
 	// print notable config settings
 	// printConfigInfo()
@@ -53,5 +64,16 @@ func main() {
 
 	// start server wrapped in a log.Fatal b/c http.ListenAndServe will not
 	// return unless there's an error
-	logger.Fatal(StartServer(cfg, s))
+	log.Fatal(StartServer(cfg, s))
+}
+
+// NewServerRoutes returns a Muxer that has all API routes.
+// This makes for easy testing using httptest
+func NewServerRoutes() *http.ServeMux {
+	m := http.NewServeMux()
+	m.HandleFunc("/.well-known/acme-challenge/", CertbotHandler)
+	m.Handle("/", middleware(HealthCheckHandler))
+	m.Handle("/urls/", middleware(DownloadUrlHandler))
+
+	return m
 }
