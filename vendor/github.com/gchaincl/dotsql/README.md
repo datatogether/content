@@ -24,14 +24,20 @@ First of all, you need to define queries into a file:
 ```sql
 -- name: create-users-table
 CREATE TABLE users (
-id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-name VARCHAR(255),
-email VARCHAR(255)
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name VARCHAR(255),
+    email VARCHAR(255)
 );
+
 -- name: create-user
 INSERT INTO users (name, email) VALUES(?, ?)
+
+-- name: find-users-by-email
+SELECT id,name,email FROM users WHERE email = ?
+
 -- name: find-one-user-by-email
 SELECT id,name,email FROM users WHERE email = ? LIMIT 1
+
 --name: drop-users-table
 DROP TABLE users
 ```
@@ -51,7 +57,8 @@ dot, err := dotsql.LoadFromFile("queries.sql")
 // Run queries
 res, err := dot.Exec(db, "create-users-table")
 res, err := dot.Exec(db, "create-user", "User Name", "main@example.com")
-rows, err := dot.Query(db, "find-one-user-by-email", "main@example.com")
+rows, err := dot.Query(db, "find-users-by-email", "main@example.com")
+row, err := dot.QueryRow(db, "find-one-user-by-email", "user@example.com")
 
 stmt, err := dot.Prepare(db, "drop-users-table")
 result, err := stmt.Exec()
@@ -67,9 +74,19 @@ Integration tests are tagged with `+integration`, so if you want to run them you
 ```bash
 go test -tags=integration
 ```
-_If  integration tests takes too long remember to_ `go install code.google.com/p/go-sqlite/go1/sqlite3`
+_If  integration tests takes too long remember to_ `go install github.com/mxk/go-sqlite/sqlite3`
 
 Otherwise just run:
 ```bash
 go test
 ```
+
+Embeding
+--
+To avoid distributing `sql` files with the binary, you will need to embed into it, tools like [gotic](https://github.com/gchaincl/gotic) may help
+
+TODO
+----
+
+- [ ] Enable text interpolation inside queries using `text/template`
+- [ ] `sqlx` integration
