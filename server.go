@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/datatogether/archive"
+	"github.com/datatogether/core"
 	"github.com/datatogether/sql_datastore"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -48,7 +48,7 @@ func main() {
 	go connectToAppDb()
 	sql_datastore.SetDB(appDB)
 	sql_datastore.Register(
-		&archive.Url{},
+		&core.Url{},
 	)
 
 	s := &http.Server{}
