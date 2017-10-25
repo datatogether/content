@@ -1,5 +1,5 @@
 .DS_Store
 gin-bin
 content
-coverage.out
+coverage.*
 config.*.json
