@@ -4,6 +4,7 @@
 [![Slack](https://img.shields.io/badge/slack-Archivers-b44e88.svg?style=flat-square)](https://archivers-slack.herokuapp.com/)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](./LICENSE) 
 [![Codecov](https://img.shields.io/codecov/c/github/datatogether/task_mgmt.svg?style=flat-square)](https://codecov.io/gh/datatogether/task_mgmt)
+[![CircleCI](https://img.shields.io/circleci/project/github/datatogether/coverage.svg?style=flat-square)](https://circleci.com/gh/datatogether/coverage)
 
 Content is a service for serving archived content stored on amazon S3.
 
