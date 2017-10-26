@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/datatogether/archive"
 	conf "github.com/datatogether/config"
+	"github.com/datatogether/core"
 	"os"
 	"path/filepath"
 )
@@ -116,12 +116,12 @@ type config struct {
 // 		"PUBLIC_KEY":      cfg.PublicKey,
 // 	})
 
-// 	// transfer settings to archive library
-// 	archive.AwsRegion = cfg.AwsRegion
-// 	archive.AwsAccessKeyId = cfg.AwsAccessKeyId
-// 	archive.AwsS3BucketName = cfg.AwsS3BucketName
-// 	archive.AwsS3BucketPath = cfg.AwsS3BucketPath
-// 	archive.AwsSecretAccessKey = cfg.AwsSecretAccessKey
+// 	// transfer settings to core library
+// 	core.AwsRegion = cfg.AwsRegion
+// 	core.AwsAccessKeyId = cfg.AwsAccessKeyId
+// 	core.AwsS3BucketName = cfg.AwsS3BucketName
+// 	core.AwsS3BucketPath = cfg.AwsS3BucketPath
+// 	core.AwsSecretAccessKey = cfg.AwsSecretAccessKey
 
 // 	return
 // }
@@ -150,12 +150,12 @@ func initConfig(mode string) (cfg *config, err error) {
 		"POSTGRES_DB_URL": cfg.PostgresDbUrl,
 	})
 
-	// transfer settings to archive library
-	archive.AwsRegion = cfg.AwsRegion
-	archive.AwsAccessKeyId = cfg.AwsAccessKeyId
-	archive.AwsS3BucketName = cfg.AwsS3BucketName
-	archive.AwsS3BucketPath = cfg.AwsS3BucketPath
-	archive.AwsSecretAccessKey = cfg.AwsSecretAccessKey
+	// transfer settings to core library
+	core.AwsRegion = cfg.AwsRegion
+	core.AwsAccessKeyId = cfg.AwsAccessKeyId
+	core.AwsS3BucketName = cfg.AwsS3BucketName
+	core.AwsS3BucketPath = cfg.AwsS3BucketPath
+	core.AwsSecretAccessKey = cfg.AwsSecretAccessKey
 
 	// output to stdout in dev mode
 	if mode == DEVELOP_MODE {
