@@ -23,7 +23,7 @@ PARTICULAR PURPOSE.
 
 We would love involvement from more people! If you notice any errors or would like to submit changes, please see our [Contributing Guidelines](./.github/CONTRIBUTING.md).
 
-We use GitHub issues for [tracking bugs and feature requests](https://github.com/datatogether/REPONAME/issues) and Pull Requests (PRs) for [submitting changes](https://github.com/datatogether/REPONAME/pulls)
+We use GitHub issues for [tracking bugs and feature requests](https://github.com/datatogether/content/issues) and Pull Requests (PRs) for [submitting changes](https://github.com/datatogether/content/pulls)
 
 ## Usage
 
