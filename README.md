@@ -6,7 +6,7 @@
 [![Codecov](https://img.shields.io/codecov/c/github/datatogether/content.svg?style=flat-square)](https://codecov.io/gh/datatogether/content)
 [![CircleCI](https://img.shields.io/circleci/project/github/datatogether/content.svg?style=flat-square)](https://circleci.com/gh/datatogether/content)
 
-Content is a service for serving archived content stored on amazon S3.
+Content is a Golang service for serving archived content stored on amazon S3. It acts as a simple interpretation layer that converts unique resource hashes into URL's within S3. In effect, it reverse engineers the paths created by [sentry](https://github.com/datatogether/sentry/) when resources are initially added to Data Together (via [API](https://github.com/datatogether/api) or the [web application](https://github.com/datatogether/webapp)).
 
 ## License & Copyright
 
@@ -27,7 +27,8 @@ We use GitHub issues for [tracking bugs and feature requests](https://github.com
 
 ## Usage
 
-We're working on a `docker-compose` file for this guy. In the meantime, to run this service, you'll have to connect to an amazon S3 bucket and postgres server by setting the following environment variables:
+
+We're working on a `docker-compose` file for this guy. In the meantime, to run this service, you'll first have to [install Golang](https://golang.org/doc/install), and then connect to an amazon S3 bucket and postgres server by setting the following environment variables:
 ```shell
   AWS_REGION
   AWS_S3_BUCKET_NAME
@@ -45,4 +46,6 @@ once those are properly set:
 
 ## Development
 
-Coming soon!
+**Content** is closely integreated with [sentry](https://github.com/datatogether/sentry/) and is best developed as part of an overall working instance of the datatogether platform. 
+
+More details coming soon! Help us improve our documentation by [filing an issue](https://github.com/datatogether/content/issues) with your question, so we know what questions users have.
